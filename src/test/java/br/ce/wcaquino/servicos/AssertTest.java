@@ -13,7 +13,7 @@ public class AssertTest {
 		
 	
 		Usuario u1 = new Usuario("Usuario 1");
-		Usuario u2 = new Usuario("Usuario 1");
+		
 		
 		Assert.assertEquals(u1, u1);
 		
