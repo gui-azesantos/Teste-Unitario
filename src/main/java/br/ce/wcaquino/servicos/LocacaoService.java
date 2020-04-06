@@ -2,6 +2,7 @@ package br.ce.wcaquino.servicos;
 
 import static br.ce.wcaquino.utils.DataUtils.adicionarDias;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -9,48 +10,75 @@ import br.ce.wcaquino.entidades.Filme;
 import br.ce.wcaquino.entidades.Locacao;
 import br.ce.wcaquino.entidades.Usuario;
 import br.ce.wcaquino.exception.FilmeSemEstoqueException;
-import br.ce.wcaquino.exception.LocadoraExcepetion;
+import br.ce.wcaquino.exception.LocadoraException;
+import br.ce.wcaquino.utils.DataUtils;
 
 public class LocacaoService {
-	
-	
-	public Locacao alugarFilme(Usuario usuario, List<Filme> filmes) throws FilmeSemEstoqueException, LocadoraExcepetion {
-		if(filmes == null || filmes.isEmpty()) {
-			throw new FilmeSemEstoqueException(); 
+
+	public Locacao alugarFilme(Usuario usuario, List<Filme> filmes) throws FilmeSemEstoqueException, LocadoraException {
+		if (filmes == null || filmes.isEmpty()) {
+			throw new FilmeSemEstoqueException();
 		}
-	
-		
-		if(usuario == null) {
-			throw new LocadoraExcepetion("Usuário Vazio");
+
+		if (usuario == null) {
+			throw new LocadoraException("Usuário Vazio");
 		}
-		
-		for (Filme filme: filmes){
-			if(filme.getEstoque() == 0) {
+
+		for (Filme filme : filmes) {
+			if (filme.getEstoque() == 0) {
 				throw new FilmeSemEstoqueException();
 			}
 		}
-		
-			Locacao locacao = new Locacao();
+
+		for (Filme filme : filmes) {
+			if (filme.getEstoque() == 0) {
+				throw new FilmeSemEstoqueException();
+			}
+		}
+
+		Locacao locacao = new Locacao();
 		locacao.setFilme(filmes);
 		locacao.setUsuario(usuario);
 		locacao.setDataLocacao(new Date());
-		Double valorTotal = 0d;
-		for (Filme filme: filmes){
-			if(filme.getEstoque() == 0) {
-				throw new FilmeSemEstoqueException();
-			}
-		}
-		locacao.setValor(valorTotal);
+		locacao.setValor(calcularValorLocacao(filmes));
 
-		//Entrega no dia seguinte
+		// Entrega no dia seguinte
 		Date dataEntrega = new Date();
 		dataEntrega = adicionarDias(dataEntrega, 1);
+		if (DataUtils.verificarDiaSemana(dataEntrega, Calendar.SUNDAY)) {
+			dataEntrega = adicionarDias(dataEntrega, 1);
+		}
 		locacao.setDataRetorno(dataEntrega);
-		
-		//Salvando a locacao...	
-		//TODO adicionar método para salvar
-		
+
+
+		// Salvando a locacao...
+		// TODO adicionar método para salvar
+
 		return locacao;
+	}
+
+	private Double calcularValorLocacao(List<Filme> filmes) {
+		Double valorTotal = 0d;
+		for (int i = 0; i < filmes.size(); i++) {
+			Filme filme = filmes.get(i);
+			Double valorFilme = filme.getPrecoLocacao();
+			switch (i) {
+			case 2:
+				valorFilme = valorFilme * 0.75;
+				break;
+			case 3:
+				valorFilme = valorFilme * 0.50;
+				break;
+			case 4:
+				valorFilme = valorFilme * 0.25;
+				break;
+			case 5:
+				valorFilme = valorFilme * 0.00;
+				break;
+			}
+			valorTotal += valorFilme;
+		}
+		return valorTotal;
 	}
 
 }

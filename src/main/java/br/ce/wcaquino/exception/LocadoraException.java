@@ -1,13 +1,13 @@
 package br.ce.wcaquino.exception;
 
-public class LocadoraExcepetion extends Exception {
+public class LocadoraException extends Exception {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 4042363993851189450L;
 
-	public LocadoraExcepetion(String message) {
+	public LocadoraException(String message) {
 		super(message);
 	
 	}
