@@ -7,9 +7,9 @@ import static org.junit.Assert.assertThat;
 import java.util.Date;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.internal.runners.statements.ExpectException;
 import org.junit.rules.ErrorCollector;
 import org.junit.rules.ExpectedException;
 
@@ -29,12 +29,21 @@ public class LocacaoServiceTest {
 	@Rule
 	public ExpectedException expectedException = ExpectedException.none();
 
+	private LocacaoService service;
+
+	@Before
+	public void setup() {
+		service = new LocacaoService();
+	}
+
 	@Test
 	public void testeLocacao() throws Exception {
 		// Cenário
 		LocacaoService locacaoService = new LocacaoService();
 		Usuario usuario = new Usuario("Usuário 1");
 		Filme filme = new Filme("Filme 1", 10, 5.0);
+
+		System.out.println("Teste!");
 
 		// Ação
 		Locacao locacao = locacaoService.alugarFilme(usuario, filme);
@@ -58,7 +67,7 @@ public class LocacaoServiceTest {
 		locacaoService.alugarFilme(usuario, filme);
 	}
 
-	// Forma Robusta
+	// Forma Robusta (Mais Completa)
 	@SuppressWarnings("deprecation")
 	@Test
 	public void testeLocacao_usuarioVazio() throws FilmeSemEstoqueException {
