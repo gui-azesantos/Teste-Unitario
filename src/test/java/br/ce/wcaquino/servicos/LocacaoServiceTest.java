@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.hamcrest.Matcher;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
@@ -22,6 +23,8 @@ import br.ce.wcaquino.entidades.Locacao;
 import br.ce.wcaquino.entidades.Usuario;
 import br.ce.wcaquino.exception.FilmeSemEstoqueException;
 import br.ce.wcaquino.exception.LocadoraException;
+import br.ce.wcaquino.servicos.marchers.DiaDaSemanaMatcher;
+import br.ce.wcaquino.servicos.marchers.MatchersProprios;
 import br.ce.wcaquino.utils.DataUtils;
 
 public class LocacaoServiceTest {
@@ -103,6 +106,7 @@ public class LocacaoServiceTest {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
 	public void naoDeveDevolverFilmeDomingo() throws FilmeSemEstoqueException, LocadoraException {
 		Assume.assumeTrue(DataUtils.verificarDiaSemana(new Date(), Calendar.SATURDAY));
@@ -117,6 +121,9 @@ public class LocacaoServiceTest {
 		// Verificação
 		boolean isSegunda = DataUtils.verificarDiaSemana(retorno.getDataRetorno(), Calendar.MONDAY);
 		Assert.assertTrue(isSegunda);
+		Assert.assertThat(retorno.getDataRetorno(),MatchersProprios.caiNumaSegunda());
+		
 	}
 
 }
+
