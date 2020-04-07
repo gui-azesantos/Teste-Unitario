@@ -7,11 +7,11 @@ import org.hamcrest.TypeSafeMatcher;
 
 import br.ce.wcaquino.utils.DataUtils;
 
-public class DataDiferencaDiaMatcher extends TypeSafeMatcher<Date> {
+public class DataDiferencaDiasMatcher extends TypeSafeMatcher<Date> {
 
 	private Integer qtdDias;
 	
-	public DataDiferencaDiaMatcher(Integer qtdDias) {
+	public DataDiferencaDiasMatcher(Integer qtdDias) {
 		this.qtdDias = qtdDias;
 	}
 
@@ -22,7 +22,7 @@ public class DataDiferencaDiaMatcher extends TypeSafeMatcher<Date> {
 		
 	@Override
 	protected boolean matchesSafely(Date data) {
-			return DataUtils.isMesmaData(data, DataUtils.obterDataComDiferencaDias(qtdDias));
+		return DataUtils.isMesmaData(data, DataUtils.obterDataComDiferencaDias(qtdDias));
 	}
 
 

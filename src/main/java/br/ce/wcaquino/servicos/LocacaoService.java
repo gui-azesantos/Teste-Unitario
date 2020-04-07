@@ -41,7 +41,6 @@ public class LocacaoService {
 		locacao.setUsuario(usuario);
 		locacao.setDataLocacao(new Date());
 		locacao.setValor(calcularValorLocacao(filmes));
-
 		// Entrega no dia seguinte
 		Date dataEntrega = new Date();
 		dataEntrega = adicionarDias(dataEntrega, 1);
@@ -49,7 +48,6 @@ public class LocacaoService {
 			dataEntrega = adicionarDias(dataEntrega, 1);
 		}
 		locacao.setDataRetorno(dataEntrega);
-
 
 		// Salvando a locacao...
 		// TODO adicionar método para salvar

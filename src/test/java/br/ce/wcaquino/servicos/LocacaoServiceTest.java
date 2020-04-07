@@ -56,8 +56,8 @@ public class LocacaoServiceTest {
 
 		// Verificação
 		error.checkThat(Locacao.getValor(), is(equalTo(0.0)));
-		error.checkThat(Locacao.getDataRetorno(), isHojeComDiferencadeDias(2));
-		error.checkThat(Locacao.getDataRetorno(), isHoje());
+		error.checkThat(Locacao.getDataRetorno(), isHojeComDiferencadeDias(1));
+		error.checkThat(Locacao.getDataLocacao(), isHoje());
 	}
 
 	@Test(expected = Exception.class)
@@ -109,6 +109,7 @@ public class LocacaoServiceTest {
 	public void naoDeveDevolverFilmeDomingo() throws FilmeSemEstoqueException, LocadoraException {
 		Assume.assumeTrue(DataUtils.verificarDiaSemana(new Date(), Calendar.SATURDAY));
 
+
 		// Cenário
 		Usuario usuario = new Usuario("Usuário 1");
 		List<Filme> filmes = Arrays.asList(new Filme("Filme 1", 10, 4.0));
@@ -117,10 +118,7 @@ public class LocacaoServiceTest {
 		Locacao retorno = service.alugarFilme(usuario, filmes);
 
 		// Verificação
-		boolean isSegunda = DataUtils.verificarDiaSemana(retorno.getDataRetorno(), Calendar.MONDAY);
-		Assert.assertTrue(isSegunda);
-		Assert.assertThat(retorno.getDataRetorno(), MatchersProprios.caiNumaSegunda());
-
+		assertThat(retorno.getDataRetorno(), MatchersProprios.caiNumaSegunda());
+	
 	}
-
 }

@@ -9,16 +9,16 @@ public class MatchersProprios {
 	public static DiaDaSemanaMatcher caiEm(Integer diaSemana) {
 		return new DiaDaSemanaMatcher(diaSemana);
 	}
-
+	
 	public static DiaDaSemanaMatcher caiNumaSegunda() {
-		return new DiaDaSemanaMatcher(Calendar.MONDAY);
+		return new DiaDaSemanaMatcher(Calendar.MONDAY );
 	}
-
-	public static DataDiferencaDiaMatcher isHojeComDiferencadeDias(Integer qtdDias) {
-		return new DataDiferencaDiaMatcher(qtdDias);
+	
+	public static DataDiferencaDiasMatcher isHojeComDiferencadeDias(Integer qtdDias) {
+		return new DataDiferencaDiasMatcher(qtdDias);
 	}
-
-	public static DataDiferencaDiaMatcher isHoje() {
-		return new DataDiferencaDiaMatcher(0);
+	
+	public static DataDiferencaDiasMatcher isHoje() {
+		return new DataDiferencaDiasMatcher(0);
 	}
 }
